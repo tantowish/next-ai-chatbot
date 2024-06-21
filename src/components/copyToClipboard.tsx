@@ -28,7 +28,7 @@ export default function CopyToClipboard({
       <Button
         variant='secondary'
         size='icon'
-        className='h-8 w-8'
+        className='h-6 w-6'
         onClick={onCopy}
       >
         {isCopied ? (

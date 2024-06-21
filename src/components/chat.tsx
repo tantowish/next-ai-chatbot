@@ -34,15 +34,15 @@ export const Chat = () => {
                     <p className="text-center text-xs">Created By <a href="https://github.com/tantowish" target="_blank">TOSHKA POLKA</a></p>
                 </div>
 
-                <ScrollArea className="mb-2 h-3/4 rounded-md border p-4"
+                <ScrollArea className="mb-2 h-3/4 rounded-md border p-3 md:p-4"
                 ref={ref}>
                     {error && (
                         <div className="text-sm text-red-400">{error.message}</div>
                     )}
                     {messages.map(m => (
-                        <div key={1} className="mr-6 whitespace-pre-wrap md:mr-12">
+                        <div key={m.id} className="mr-6 whitespace-pre-wrap md:mr-12">
                         {m.role === 'user' && (
-                            <div className="mb-6 flex gap-3">
+                            <div className="mb-6 flex gap-2 md:gap-3">
                                 <Avatar className="h-8 w-8 md:h-10 md:w-10">
                                     <AvatarImage src=""/>
                                     <AvatarFallback>us</AvatarFallback>
@@ -54,7 +54,7 @@ export const Chat = () => {
                             </div>
                         )}
                         {m.role === 'assistant' && (
-                            <div className="mb-6 flex gap-3">
+                            <div className="mb-6 flex gap-2 md:gap-3">
                                 <Avatar className="h-8 w-8 md:h-10 md:w-10">
                                     <AvatarFallback className="bg-emerald-500 text-white">AI</AvatarFallback>
                                 </Avatar>
