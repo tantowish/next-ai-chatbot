@@ -3,15 +3,17 @@
 import { useChat } from "ai/react";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
-import { CopyIcon, SendHorizonalIcon } from "lucide-react";
+import { SendHorizonalIcon } from "lucide-react";
 import { ScrollArea } from "./ui/scroll-area";
 import { useEffect, useRef } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import CopyToClipboard from "./copyToClipboard";
+import Markdown from "react-markdown";
+
 
 export const Chat = () => {
     const ref = useRef<HTMLDivElement>(null)
-    const { messages, input, handleInputChange, isLoading, handleSubmit, error } = useChat({
+    const { messages, input, handleInputChange, isLoading, handleSubmit: originalHandleSubmit, error } = useChat({
         // initialMessages: [
         //     {
         //         id: Date.now().toString(),
@@ -20,6 +22,18 @@ export const Chat = () => {
         //     }
         // ]
     });
+
+    const handleSubmit = (event : React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+
+        const modelValue = "chatgpt";
+
+        const data:Record<string, string> = {
+            model: modelValue,
+        };
+
+        originalHandleSubmit(event, {data});
+    };
 
     useEffect(() => {
         if(ref.current === null) return
@@ -49,7 +63,7 @@ export const Chat = () => {
                                 </Avatar>
                                 <div className="mt-1.5">
                                     <p className="font-semibold text-sm md:text-base">You</p>
-                                    <div className="mt-1.5 text-sm text-zinc-500">{m.content}</div>
+                                    <div className="mt-1.5 text-sm text-zinc-500 text-justify">{m.content}</div>
                                 </div>
                             </div>
                         )}
@@ -63,7 +77,7 @@ export const Chat = () => {
                                         <p className="font-semibold text-sm md:text-base">Bot</p>
                                         <CopyToClipboard message={m} />
                                     </div>
-                                    <div className="mt-1.5 text-sm text-zinc-500">{m.content}</div>
+                                    <Markdown className="mt-1.5 text-sm text-zinc-500 text-justify">{m.content}</Markdown>
                                 </div>
                             </div>
                         )}
@@ -72,6 +86,11 @@ export const Chat = () => {
                 </ScrollArea>
                 {/* Input */}
                 <form onSubmit={handleSubmit} className="relative">
+                    <Input
+                        className="hidden"
+                        value={"chatgpt"}
+                        name="model"
+                    />
                     <Input
                         className="pr-12 placeholder:italic placeholder:text-zinc-600/75 focus-visible:ring-zinc-500"
                         value={input}

@@ -12,7 +12,8 @@ export async function POST(req: Request) {
         if(!process.env.api_key){
             return new NextResponse('Missing Openai API Key.', {status: 400})
         }    
-        const { messages } = await req.json();
+        const { messages, data } = await req.json();
+        // console.log(data)
     
         // Ask OpenAI for a streaming chat completion given the prompt
         const response = await openai.chat.completions.create({
