@@ -3,8 +3,8 @@
 **Clone**
 
 ```
-git clone https://github.com/tantowish/zenspire-web.git
-cd zenspire-web
+git clone https://github.com/tantowish/next-ai-chatbot.git
+cd next-ai-chatbot
 ```
 
 **Install local dependencies**
