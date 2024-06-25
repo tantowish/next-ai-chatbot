@@ -39,6 +39,10 @@ export const Chat = () => {
     const handleSubmit = (event : React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
+        if (!input.trim()) {
+            return;
+        }
+
         const modelValue = model;
 
         const data:Record<string, string> = {
@@ -59,6 +63,13 @@ export const Chat = () => {
         setInitialContent(newContent);
         setChatConfig({ initialMessages: [{ id: Date.now().toString(), role: 'system', content: newContent }] });
         console.log(initialContent)
+    };
+
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
+        if (event.key === 'Enter' && !event.shiftKey) {
+            event.preventDefault();
+            handleSubmit(event as any);
+        }
     };
 
     useEffect(() => {
@@ -147,6 +158,7 @@ export const Chat = () => {
                             value={input}
                             placeholder="Send message..."
                             onChange={handleInputChange}
+                            onKeyDown={handleKeyDown}
                         />
 
                         <Button
